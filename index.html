@@ -62,8 +62,10 @@
   .hero .lede{color:var(--ink2);max-width:46ch;margin:0 0 28px}
   .hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:30px}
   .hero-photo{position:relative}
-  .hero-photo img{border-radius:6px;box-shadow:var(--shadow-lg);border:1px solid var(--line)}
-  .hero-photo .cap{position:absolute;left:10px;bottom:10px;background:rgba(255,255,255,.92);border:1px solid var(--line);font-size:10.5px;color:var(--ink2);padding:4px 10px;border-radius:3px}
+  .hero-photo img{mix-blend-mode:multiply;filter:contrast(1.05) saturate(1.05) brightness(1.06);
+    -webkit-mask-image:radial-gradient(ellipse 66% 62% at 56% 50%,#000 56%,transparent 80%);
+    mask-image:radial-gradient(ellipse 66% 62% at 56% 50%,#000 56%,transparent 80%);
+    transform:scale(1.14);transform-origin:center}
   .stats{position:relative;z-index:1;display:flex;gap:0;background:#fff;border:1px solid var(--line);border-radius:6px;box-shadow:var(--shadow);overflow:hidden}
   .stat{flex:1;text-align:center;padding:14px 8px}
   .stat + .stat{border-left:1px solid var(--line)}
@@ -264,8 +266,7 @@
           </div>
         </div>
         <div class="hero-photo">
-          <img src="images/wheel_main.jpg" alt="バレル研磨とゴールドハードウェアで仕上げたBBS RSホイール" width="1099" height="736">
-          <span class="cap">実際の施工例｜BBS-RS リバレル＋バレル研磨フルポリッシュ</span>
+          <img src="images/wheel_main.jpg" alt="バレル研磨とゴールドハードウェアで仕上げたBBS RSホイール（実際の施工例）" width="1099" height="736">
         </div>
       </div>
     </div>
