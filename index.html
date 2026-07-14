@@ -31,10 +31,8 @@
   .topbar-in{display:flex;justify-content:space-between;gap:16px;font-size:11.5px;color:var(--mut);padding:6px 0}
   header.site{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
   .nav{display:flex;align-items:center;gap:22px;height:66px}
-  .brand{display:flex;align-items:center;gap:10px;margin-right:auto}
-  .brand .mark{width:38px;height:38px;flex:0 0 38px}
-  .brand .en{font-size:9px;letter-spacing:.22em;color:var(--mut);font-weight:600}
-  .brand .jp{font-size:17px;font-weight:800;letter-spacing:.04em;line-height:1.2}
+  .brand{display:flex;align-items:center;margin-right:auto}
+  .brand img{width:auto;height:46px}
   .navlinks{display:flex;gap:20px;font-size:13.5px;font-weight:600;color:var(--ink2)}
   .navlinks a{padding:6px 2px;border-bottom:2px solid transparent}
   .navlinks a:hover{color:var(--red);border-bottom-color:var(--red)}
@@ -236,14 +234,7 @@
 <header class="site">
   <div class="wrap nav">
     <a class="brand" href="#top" aria-label="オートサービス西 トップへ">
-      <svg class="mark" viewBox="0 0 100 100" aria-hidden="true">
-        <circle cx="50" cy="50" r="44" fill="none" stroke="#20242a" stroke-width="7"/>
-        <g stroke="#20242a" stroke-width="7" stroke-linecap="round">
-          <line x1="50" y1="50" x2="50" y2="14"/><line x1="50" y1="50" x2="81" y2="68"/><line x1="50" y1="50" x2="19" y2="68"/>
-        </g>
-        <circle cx="50" cy="50" r="13" fill="#c1272d"/>
-      </svg>
-      <span><span class="en">AUTO SERVICE NISHI</span><br><span class="jp">オートサービス西</span></span>
+      <img src="images/logo.svg" alt="AUTOSERVICE NISHI オートサービス西" width="287" height="92">
     </a>
     <nav class="navlinks" aria-label="メイン">
       <a href="#services">サービス</a>
@@ -518,8 +509,7 @@
   <div class="wrap">
     <div class="foot-in">
       <div>
-        <span class="en">AUTO SERVICE NISHI</span><br>
-        <span class="jp">オートサービス西</span>
+        <img src="images/logo_white.svg" alt="AUTOSERVICE NISHI オートサービス西" width="287" height="92" style="width:auto;height:52px">
         <p class="addr">〒899-5652 鹿児島県姶良市平松7366-4<br>TEL 0995-65-7225 ／ FAX 0995-66-4606</p>
       </div>
       <div style="text-align:right">
