@@ -56,7 +56,7 @@
   .hero::after{content:"";position:absolute;inset:0;
     background:linear-gradient(90deg,rgba(245,246,248,.96) 0%,rgba(245,246,248,.82) 46%,rgba(245,246,248,.25) 100%)}
   .hero-in{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:center;padding-block:64px 68px}
-  .hero .tag{display:inline-flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-left:3px solid var(--red);padding:6px 14px;font-size:12px;font-weight:700;color:var(--ink2);margin-bottom:20px}
+  .hero .tag{display:block;font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--ink2);margin-bottom:14px}
   .hero h1{font-size:clamp(27px,3.6vw,42px);font-weight:800;line-height:1.5;letter-spacing:.02em;margin:0 0 16px;text-wrap:balance}
   .hero h1 .u{background:linear-gradient(transparent 68%,rgba(193,39,45,.22) 68%)}
   .hero .lede{color:var(--ink2);max-width:46ch;margin:0 0 28px}
@@ -196,8 +196,24 @@
     .navlinks,.nav .tel,.nav .btn{display:none}
     .mbar{display:grid}
     section.blk{padding-block:56px}
-    .stats{flex-wrap:wrap}
-    .stat{flex:1 1 33%}
+    .ribbon{font-size:10px;padding:5px 12px}
+    .sec-head .en{font-size:25px}
+    /* hero: 見出し→写真→説明→CTA→stats の順に組み替え */
+    .hero-in{gap:0}
+    .hero-in > div:first-child{display:contents}
+    .hero .tag{order:1}
+    .hero h1{order:2;margin-bottom:14px}
+    .hero-photo{order:3;margin:2px 0 10px}
+    .hero-photo img{width:min(100%,400px)}
+    .hero .lede{order:4;margin-bottom:22px}
+    .hero-cta{order:5;display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px}
+    .hero-cta .btn{padding:14px 8px;font-size:13.5px;white-space:nowrap}
+    .stats{order:6;flex-wrap:wrap}
+    .stat{flex:1 1 33%;padding:16px 6px 14px;gap:6px}
+    .stat .ic{width:30px;height:30px}
+    .stat .v{font-size:21px}
+    .stat .v small{font-size:12px}
+    .stat .k{font-size:10px;letter-spacing:0}
     .proc{grid-template-columns:1fr}
     .p-step:nth-child(odd){border-right:0}
     .p-step:nth-last-child(-n+2){border-bottom:1px solid var(--line)}
