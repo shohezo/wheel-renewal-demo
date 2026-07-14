@@ -29,10 +29,14 @@
   /* ---------- header ---------- */
   .topbar{background:var(--bg);border-bottom:1px solid var(--line)}
   .topbar-in{display:flex;justify-content:space-between;gap:16px;font-size:11.5px;color:var(--mut);padding:6px 0}
-  header.site{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-  .nav{display:flex;align-items:center;gap:22px;height:80px}
+  header.site{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);transition:box-shadow .3s ease}
+  body.scrolled header.site{box-shadow:0 2px 14px rgba(32,36,42,.08)}
+  .nav{display:flex;align-items:center;gap:22px;height:80px;transition:height .25s ease}
+  body.scrolled .nav{height:60px}
   .brand{display:flex;align-items:center;margin-right:auto}
-  .brand img{width:auto;height:58px}
+  .brand img{width:auto;height:58px;transition:height .25s ease}
+  body.scrolled .brand img{height:44px}
+  .foot-logo{width:auto;height:68px}
   .navlinks{display:flex;gap:20px;font-size:13.5px;font-weight:600;color:var(--ink2)}
   .navlinks a{padding:6px 2px;border-bottom:2px solid transparent}
   .navlinks a:hover{color:var(--red);border-bottom-color:var(--red)}
@@ -40,11 +44,25 @@
   .tel .num{font-size:19px;font-weight:800;letter-spacing:.02em;font-variant-numeric:tabular-nums}
   .tel .lbl{font-size:10px;color:var(--mut)}
   .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:700;font-size:14px;padding:12px 22px;border-radius:4px;border:1px solid transparent;cursor:pointer;transition:background .15s,box-shadow .15s,transform .1s}
-  .btn-red{background:var(--red);color:#fff;box-shadow:0 3px 10px rgba(193,39,45,.28)}
+  .btn-red{background:var(--red);color:#fff}
   .btn-red:hover{background:var(--red-d)}
   .btn-line{border-color:var(--line-d);color:var(--ink);background:#fff}
   .btn-line:hover{border-color:var(--ink)}
   .btn-lg{padding:15px 30px;font-size:15px}
+
+  /* hamburger + drawer (tablet / SP) */
+  .hamburger{display:none;flex-direction:column;justify-content:center;gap:6px;width:46px;height:46px;padding:0;border:1px solid var(--line);border-radius:6px;background:#fff;cursor:pointer}
+  .hamburger span{display:block;width:24px;height:2px;background:var(--ink);margin:0 auto;border-radius:2px}
+  .drawer-backdrop{position:fixed;inset:0;z-index:90;background:rgba(20,24,28,.5);opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
+  body.menu-open .drawer-backdrop{opacity:1;visibility:visible}
+  .drawer{position:fixed;top:0;right:0;bottom:0;z-index:95;width:min(82vw,320px);background:#fff;transform:translateX(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;padding:18px 22px 28px;overflow-y:auto;box-shadow:-10px 0 34px rgba(0,0,0,.16)}
+  body.menu-open .drawer{transform:none}
+  .drawer .dclose{align-self:flex-end;width:40px;height:40px;border:0;background:transparent;font-size:26px;line-height:1;color:var(--ink2);cursor:pointer;margin-bottom:6px}
+  .drawer .dlink{padding:15px 6px;font-weight:700;font-size:15.5px;color:var(--ink);border-bottom:1px solid var(--line)}
+  .drawer .dlink:hover{color:var(--red)}
+  .drawer .dtel{margin-top:20px;font-size:11px;color:var(--mut);letter-spacing:.06em}
+  .drawer .dtel b{display:block;font-size:22px;font-weight:800;color:var(--ink);letter-spacing:.02em}
+  .drawer .btn{margin-top:16px}
 
   /* ---------- hero ---------- */
   .hero{position:relative;background:var(--bg2);overflow:hidden;border-bottom:1px solid var(--line)}
@@ -77,6 +95,7 @@
   .sec-head .jp{display:inline-block;color:var(--red);font-size:12.5px;font-weight:700;letter-spacing:.2em;margin-top:6px}
   .sec-head .jp::before,.sec-head .jp::after{content:"—";color:var(--line-d);margin:0 10px}
   .sec-head p{max-width:60ch;margin:18px auto 0;color:var(--ink2);font-size:14.5px}
+  .sec-head p span{display:inline-block}
 
   /* services */
   .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
@@ -171,14 +190,42 @@
   .foot-legal{margin-top:30px;padding-top:18px;border-top:1px solid rgba(255,255,255,.12);font-size:11px;color:#8a919a;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 
   /* mobile bar */
-  .mbar{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;grid-template-columns:1fr 1.25fr;background:#fff;border-top:1px solid var(--line-d);box-shadow:0 -4px 16px rgba(32,36,42,.12)}
+  .mbar{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;grid-template-columns:1fr 1.25fr;background:#fff;border-top:1px solid var(--line-d);box-shadow:0 -4px 16px rgba(32,36,42,.12);transform:translateY(110%);transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+  body.past-hero .mbar{transform:none}
+
+  /* scroll reveal */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){
+    .reveal{opacity:1 !important;transform:none !important;transition:none}
+    .nav,.brand img,.mbar{transition:none}
+  }
   .mbar a{display:flex;align-items:center;justify-content:center;gap:8px;padding:15px 8px;font-weight:800;font-size:14.5px}
   .mbar .call{color:var(--ink)}
   .mbar .quote{background:var(--red);color:#fff}
 
+  @media (min-width:921px){
+    .brand img{height:70px}
+    body.scrolled .nav{height:64px}
+    body.scrolled .brand img{height:50px}
+    .foot-logo{height:82px}
+  }
   @media (max-width:920px){
-    .hero-in{grid-template-columns:1fr;gap:30px;padding-block:44px 52px}
+    /* header: インラインナビをハンバーガーに集約 */
+    .navlinks{display:none}
+    .nav .tel{display:none}
+    .nav .btn{display:none}
+    .hamburger{display:flex}
+    /* hero: 見出し→写真→説明→CTA→stats の順（SPと共通） */
+    .hero-in{grid-template-columns:1fr;gap:0;padding-block:44px 52px}
+    .hero-in > div:first-child{display:contents}
+    .hero .tag{order:1}
+    .hero h1{order:2;margin-bottom:14px}
+    .hero-photo{order:3;margin:2px auto 12px}
     .hero-photo img{width:min(100%,520px);margin-inline:auto}
+    .hero .lede{order:4;margin-bottom:24px}
+    .hero-cta{order:5;margin-bottom:26px}
+    .stats{order:6}
     .svc-grid{grid-template-columns:1fr}
     .proc-wrap{grid-template-columns:1fr}
     .proc-photo{min-height:220px}
@@ -191,22 +238,15 @@
   }
   @media (max-width:640px){
     .topbar{display:none}
-    .navlinks,.nav .tel,.nav .btn{display:none}
     .mbar{display:grid}
     section.blk{padding-block:56px}
     .ribbon{font-size:10px;padding:5px 12px}
     .sec-head .en{font-size:25px}
-    /* hero: 見出し→写真→説明→CTA→stats の順に組み替え */
-    .hero-in{gap:0}
-    .hero-in > div:first-child{display:contents}
-    .hero .tag{order:1}
-    .hero h1{order:2;margin-bottom:14px}
-    .hero-photo{order:3;margin:2px 0 10px}
+    /* hero: 並び順は920pxブロックと共通。SP固有の調整のみ */
     .hero-photo img{width:min(100%,400px)}
-    .hero .lede{order:4;margin-bottom:22px}
-    .hero-cta{order:5;display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px}
+    .hero-cta{display:grid;grid-template-columns:1fr 1fr;gap:10px}
     .hero-cta .btn{padding:14px 8px;font-size:13.5px;white-space:nowrap}
-    .stats{order:6;flex-wrap:wrap}
+    .stats{flex-wrap:wrap}
     .stat{flex:1 1 33%;padding:16px 6px 14px;gap:6px}
     .stat .ic{width:30px;height:30px}
     .stat .v{font-size:21px}
@@ -248,8 +288,23 @@
       <span class="lbl">お電話でのご相談もお気軽に</span>
     </div>
     <a class="btn btn-red" href="#flow">無料見積もり</a>
+    <button class="hamburger" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="drawer">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </header>
+
+<div class="drawer-backdrop" data-close></div>
+<nav id="drawer" class="drawer" aria-label="モバイルメニュー">
+  <button class="dclose" type="button" aria-label="メニューを閉じる" data-close>&times;</button>
+  <a class="dlink" href="#services" data-close>サービス</a>
+  <a class="dlink" href="#works" data-close>施工実績</a>
+  <a class="dlink" href="#process" data-close>作業工程</a>
+  <a class="dlink" href="#flow" data-close>見積もり</a>
+  <a class="dlink" href="#access" data-close>アクセス</a>
+  <div class="dtel">お電話でのご相談<b>0995-65-7225</b>9:00〜19:00（日曜・祭日休）</div>
+  <a class="btn btn-red btn-lg" href="#flow" data-close>写真で無料見積もり</a>
+</nav>
 
 <main id="top">
 
@@ -312,8 +367,8 @@
                   <rect x="28.5" y="20.6" width="5" height="2.8" rx="1.2"/>
                 </g>
               </svg>
-              <div class="v">2<small>機</small></div>
-              <div class="k">特許取得の自社研磨機</div>
+              <div class="v">特許取得</div>
+              <div class="k">2機の自社研磨機</div>
             </div>
           </div>
         </div>
@@ -330,7 +385,7 @@
       <div class="sec-head">
         <div class="en">SERVICE</div>
         <span class="jp">サービス</span>
-        <p>二輪・四輪、メーカーや素材を問わず対応します。基本となる修正の確かさがあってこそ、磨き・塗装の美しさが生きる。約80種の加工メニューを、この三本柱でご案内します。</p>
+        <p><span>二輪・四輪、</span><span>メーカーや素材を</span><span>問わず対応します。</span><span>基本となる修正の</span><span>確かさがあってこそ、</span><span>磨き・塗装の</span><span>美しさが生きる。</span><span>約80種の加工メニューを、</span><span>この三本柱で</span><span>ご案内します。</span></p>
       </div>
       <div class="svc-grid">
         <article class="svc">
@@ -367,7 +422,7 @@
       <div class="sec-head">
         <div class="en">REASON</div>
         <span class="jp">選ばれる理由</span>
-        <p>速さや安さではなく、仕上がりで選ばれてきました。遠方から当社までご依頼いただくのには、理由があります。</p>
+        <p><span>速さや安さではなく、</span><span>仕上がりで</span><span>選ばれてきました。</span><span>遠方から当社まで</span><span>ご依頼いただくのには、</span><span>理由があります。</span></p>
       </div>
       <div class="why-grid">
         <div class="why"><h4><span class="n">01</span>37年の専門技術</h4><p>昭和63年創業。ホイール修正を土台に、研磨・塗装・メッキまで一貫して自社で対応します。</p></div>
@@ -384,7 +439,7 @@
       <div class="sec-head">
         <div class="en">PROCESS</div>
         <span class="jp">作業工程</span>
-        <p>見た目だけを整える速攻修理は行っていません。あたりまえの工程を省かず積み重ねることが、確実な修復と美しい仕上がりへの近道です。</p>
+        <p><span>見た目だけを整える</span><span>速攻修理は</span><span>行っていません。</span><span>あたりまえの工程を</span><span>省かず積み重ねることが、</span><span>確実な修復と</span><span>美しい仕上がりへの</span><span>近道です。</span></p>
       </div>
       <div class="proc-wrap">
         <div class="proc-photo">
@@ -414,7 +469,7 @@
       <div class="sec-head">
         <div class="en">WORKS</div>
         <span class="jp">施工実績</span>
-        <p>最新の施工例「BBS-RS 16⇒17インチ リバレル＋バレル研磨フルポリッシュ」より。日々の仕上がりはブログで随時公開しています。</p>
+        <p><span>最新の施工例</span><span>「BBS-RS 16⇒17インチ</span> <span>リバレル＋バレル研磨</span><span>フルポリッシュ」より。</span><span>日々の仕上がりは</span><span>ブログで随時</span><span>公開しています。</span></p>
       </div>
       <div class="works-grid">
         <figure class="work" style="margin:0">
@@ -443,7 +498,7 @@
   <section class="blk">
     <div class="wrap">
       <div class="voice">
-        <p class="q">「量より質」と言いますが、「量」をこなさないと「質」は向上しません。<br>長年の経験こそが、<span class="a">信用と信頼、安心</span>へと繋がります。</p>
+        <p class="q">「量より質」と言いますが、「量」をこなさないと「質」は向上しません。<br>長年の経験こそが、<span class="a">信用と信頼、安心</span>へ繋がると信じています。</p>
         <p>料金だけで選ぶと、仕上がりも値段なりになります。高度で特殊な技術を要するホイール修正・リフレッシュは、職人の経験とノウハウで品質が大きく変わる仕事です。</p>
         <cite>有限会社オートサービス西 代表<b>西 昌則</b></cite>
       </div>
@@ -456,7 +511,7 @@
       <div class="sec-head">
         <div class="en">ESTIMATE</div>
         <span class="jp">無料見積もり</span>
-        <p>来店は不要です。スマホで撮った写真から、修正の可否・仕上がりイメージ・概算金額と納期をご案内します。</p>
+        <p><span>来店は不要です。</span><span>スマホで撮った写真から、</span><span>修正の可否・</span><span>仕上がりイメージ・</span><span>概算金額と納期を</span><span>ご案内します。</span></p>
       </div>
       <div class="flow-grid">
         <div class="f-step"><span class="fn">STEP 1</span><h4>写真を撮る</h4><p>傷や全体の状態がわかるように数枚。裏リムや刻印が写っているとより正確にご案内できます。</p></div>
@@ -509,7 +564,7 @@
   <div class="wrap">
     <div class="foot-in">
       <div>
-        <img src="images/logo_white.svg" alt="AUTOSERVICE NISHI オートサービス西" width="287" height="92" style="width:auto;height:68px">
+        <img src="images/logo_white.svg" alt="AUTOSERVICE NISHI オートサービス西" width="287" height="92" class="foot-logo">
         <p class="addr">〒899-5652 鹿児島県姶良市平松7366-4<br>TEL 0995-65-7225 ／ FAX 0995-66-4606</p>
       </div>
       <div style="text-align:right">
@@ -528,5 +583,41 @@
   <a class="quote" href="#flow">写真で無料見積もり</a>
 </div>
 
+<script>
+(function(){
+  var body=document.body, ham=document.querySelector('.hamburger');
+  if(!ham) return;
+  function open(){body.classList.add('menu-open');ham.setAttribute('aria-expanded','true');}
+  function close(){body.classList.remove('menu-open');ham.setAttribute('aria-expanded','false');}
+  ham.addEventListener('click',function(){body.classList.contains('menu-open')?close():open();});
+  document.querySelectorAll('[data-close]').forEach(function(el){el.addEventListener('click',close);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+})();
+
+/* header shrink on scroll */
+(function(){
+  var onScroll=function(){document.body.classList.toggle('scrolled', window.scrollY>40);};
+  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+})();
+
+/* SP mbar appears after hero */
+(function(){
+  var hero=document.querySelector('.hero'); if(!hero||!('IntersectionObserver' in window)) return;
+  new IntersectionObserver(function(en){
+    document.body.classList.toggle('past-hero', !en[0].isIntersecting);
+  },{threshold:0}).observe(hero);
+})();
+
+/* section reveal on scroll */
+(function(){
+  var targets=document.querySelectorAll('.sec-head,.svc,.why,.proc-wrap,.work,.voice,.f-step,.cta-band,.access-grid');
+  if(!('IntersectionObserver' in window)){return;}
+  targets.forEach(function(el){el.classList.add('reveal');});
+  var io=new IntersectionObserver(function(en){
+    en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+  },{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+  targets.forEach(function(el){io.observe(el);});
+})();
+</script>
 </body>
 </html>
